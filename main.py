@@ -2,6 +2,7 @@ import requests
 import time
 
 API_URL = 'https://api.telegram.org/bot'
+API_CATS_URL = 'https://api.thecatapi.com/v1/images/search'
 BOT_TOKEN = '6823518119:AAE4u7gj684utCAtHKxT_Agi6pnhTLQOnw4'
 MAX_COUNTER = 100
 
@@ -19,8 +20,7 @@ while counter < MAX_COUNTER:
         for result in updates['result']:
             offset = result['update_id']
             chat_id = result['message']['from']['id']
-            requests.get(f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}&photo=https://prnt.sc/1MzUIJ37qElw&caption=это моя тетя')
-            requests.get(f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}&photo=https://prnt.sc/N2cFuRt7lnOu&caption=это моя тетя')
+            requests.get(f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}&photo=')
 
     time.sleep(1)
     counter += 1
