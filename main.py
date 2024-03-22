@@ -3,7 +3,7 @@ import time
 
 API_URL = 'https://api.telegram.org/bot'
 API_CATS_URL = 'https://api.thecatapi.com/v1/images/search'
-BOT_TOKEN = '6823518119:AAE4u7gj684utCAtHKxT_Agi6pnhTLQOnw4'
+BOT_TOKEN = 'blablabla'
 MAX_COUNTER = 100
 
 offset = -2
