@@ -1,26 +1,35 @@
-import requests
-import time
+from aiogram import Bot, Dispatcher
+from aiogram.filters import Command
+from aiogram.types import Message
 
-API_URL = 'https://api.telegram.org/bot'
-API_CATS_URL = 'https://api.thecatapi.com/v1/images/search'
-BOT_TOKEN = 'blablabla'
-MAX_COUNTER = 100
+# Вместо BOT TOKEN HERE нужно вставить токен вашего бота, полученный у @BotFather
+BOT_TOKEN = '6823518119:AAE4u7gj684utCAtHKxT_Agi6pnhTLQOnw4'
 
-offset = -2
-counter = 0
-chat_id: int
+# Создаем объекты бота и диспетчера
+bot = Bot(token=BOT_TOKEN)
+dp = Dispatcher()
 
-while counter < MAX_COUNTER:
 
-    print('attempt =', counter)  # Чтобы видеть в консоли, что код живет
+# Этот хэндлер будет срабатывать на команду "/start"
+@dp.message(Command(commands=["start"]))
+async def process_start_command(message: Message):
+    await message.answer('Привет!\nМеня зовут Эхо-бот!\nНапиши мне что-нибудь')
 
-    updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}').json()
-    print(updates)
-    if updates['result']:
-        for result in updates['result']:
-            offset = result['update_id']
-            chat_id = result['message']['from']['id']
-            requests.get(f'{API_URL}{BOT_TOKEN}/sendPhoto?chat_id={chat_id}&photo=')
+# Этот хэндлер будет срабатывать на команду "/help"
+@dp.message(Command(commands=['help']))
+async def process_help_command(message: Message):
+    await message.answer(
+        'Напиши мне что-нибудь и в ответ '
+        'я пришлю тебе твое сообщение'
+    )
 
-    time.sleep(1)
-    counter += 1
+
+# Этот хэндлер будет срабатывать на любые ваши текстовые сообщения,
+# кроме команд "/start" и "/help"
+@dp.message()
+async def send_echo(message: Message):
+    await message.reply(text=message.text)
+
+
+if __name__ == '__main__':
+    dp.run_polling(bot)
